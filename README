@@ -1,0 +1,61 @@
+Alignment
+README
+___________________________________________________________________________________________________________________________________________________
+BACKGROUND:
+
+
+In the field of computational biology, sequence alignments are a way of identifying similarities between different sequences of DNA. For example, the "best" alignment of the DNA strings ATTCGA and ATCG might be:
+
+ATTCGA
+AT-CG-
+
+Where the "-" represent gaps in the second sequence. Here I have implemented several variations of a dynamic-programming algorithm for sequence alignment. Each is used for a different purpose:
+
+global alignment: The overall best alignment between two sequences. In general, alignments that maximize character matches between sequences and minimize gaps and mismatches are better.
+
+local alignment: Instead of an overall best alignment, outputs substrings of the two sequences whose global alignments are the best among all global alignments of all substrings of these sequences. For example, the best local alignment for GATTCGA and ATC might be:
+ATTC
+AT-C
+
+fitting alignment: "fits" all of a shorter sequence into a longer sequence optimally.
+
+global alignment with affine gap penalties: A global alignment which takes into account that one large gap in DNA is more likely, evolutionarily speaking, than several small gaps. 
+
+These algorithms are all O(m*n) where m and n are the lengths of the two sequences. 
+___________________________________________________________________________________________________________________________________________________
+COMPILING AND RUNNING:
+
+> make all
+will generate the following executables:
+
+> ./global <fa-file1> <fa-file2> <match-score> <mismatch-penalty> <gap-penalty>
+Will print the score of the optimal global alignment between the sequences in fa-file1 and fa-file2 and give the alignment
+
+>./local <fa-file1> <fa-file2> <match-score> <mismatch-penalty> <gap-penalty>
+Will print the score of the optimal local alignment between the sequences in fa-file1 and fa-file2 and give the alignment.
+
+>./fitting <fa-file1> <fa-file2> <match-score> <mismatch-penalty> <gap-penalty>
+Will print the score of the optimal fitting alignment of the shorter sequence to the longer sequence (fa-file1 and fa-file2) and give the alignment.
+
+>./globalAffine <fa-file1> <fa-file2> <match-score> <mismatch-penalty> <gap-open-penalty> <gap-extend-penalty>
+Will print the score of the optimal fitting alignment of the shorter sequence to the longer sequence (fa-file1 and fa-file2) and give the alignment.
+
+>./orthologyFinder <fa-file1> <fa-file2>
+Will report orthologies between the sequences within fa-file1 and fa-file2
+
+>make clean
+will remove all executables.
+
+___________________________________________________________________________________________________________________________________________________
+File formats of inputs:
+<fa-xxx> : a file in FASTA format, ie:
+
+  > <sequence name>
+  <first line of sequence>
+  <second line of sequence>
+  ...
+
+
+<match-score> : a number signifying the magnitude of a "reward" to assign matching two characters in the alignment
+<mismatch-penalty> : a number signifying the magnitude of a "penalty" to assign aligning two non-identical characters in the alignment
+<gap-penalty> : a number signifying the magnitude of a "penalty" to assign inserting a gap into one sequence in the alignment
